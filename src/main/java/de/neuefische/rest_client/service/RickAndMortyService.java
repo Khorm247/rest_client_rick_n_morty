@@ -1,5 +1,6 @@
 package de.neuefische.rest_client.service;
 
+import de.neuefische.rest_client.model.InfoClass;
 import de.neuefische.rest_client.model.RickAndMortyApiResponse;
 import de.neuefische.rest_client.model.RickAndMortyCharacter;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,13 @@ public class RickAndMortyService {
     public RickAndMortyApiResponse getCharacterByStatus(String status) {
         return restClient.get()
                 .uri("/character?status=" + status)
+                .retrieve()
+                .body(RickAndMortyApiResponse.class);
+    }
+
+    public RickAndMortyApiResponse getSpeciesStats(String species) {
+        return restClient.get()
+                .uri("/character?species=" + species)
                 .retrieve()
                 .body(RickAndMortyApiResponse.class);
     }

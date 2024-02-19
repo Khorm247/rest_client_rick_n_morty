@@ -9,7 +9,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RickAndMortyApiResponse {
-    RickAndMortyInfo info;
-    List<RickAndMortyCharacter> results;
+public class InfoClass {
+            String count;
+            String pages;
+            String nextUrl;
+            String prevUrl;
+            List<RickAndMortyApiResponse> results;
 }
