@@ -1,17 +1,25 @@
 package de.neuefische.rest_client.service;
 
-import de.neuefische.rest_client.model.InfoClass;
+import de.neuefische.rest_client.exception.InvalidIdException;
 import de.neuefische.rest_client.model.RickAndMortyApiResponse;
 import de.neuefische.rest_client.model.RickAndMortyCharacter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Service
 public class RickAndMortyService {
 
-    private RestClient restClient = RestClient.builder()
-            .baseUrl("https://rickandmortyapi.com/api")
-            .build();
+    private final RestClient restClient;
+
+    public RickAndMortyService(@Value("${basic.url}") String basicUrl) {
+        this.restClient = RestClient.create(basicUrl);
+    }
+
+//    private RestClient restClient = RestClient.builder()
+//            .baseUrl("https://rickandmortyapi.com/api")
+//            .build();
 
     public RickAndMortyApiResponse getAllRickAndMortyCharacters() {
         return restClient.get()
@@ -21,10 +29,14 @@ public class RickAndMortyService {
     }
 
     public RickAndMortyCharacter getCharacterById(String id) {
-        return restClient.get()
-                .uri("/character/" + id)
-                .retrieve()
-                .body(RickAndMortyCharacter.class);
+        if(Integer.parseInt(id) < 825){
+            return restClient.get()
+                    .uri("/character/" + id)
+                    .retrieve()
+                    .body(RickAndMortyCharacter.class);
+        }
+        else
+            throw new InvalidIdException("Invalid ID");
     }
 
     public RickAndMortyApiResponse getCharacterByStatus(String status) {

@@ -1,13 +1,10 @@
 package de.neuefische.rest_client.controller;
 
-import de.neuefische.rest_client.model.InfoClass;
 import de.neuefische.rest_client.model.RickAndMortyCharacter;
 import lombok.RequiredArgsConstructor;
 import de.neuefische.rest_client.model.RickAndMortyApiResponse;
 import org.springframework.web.bind.annotation.*;
 import de.neuefische.rest_client.service.RickAndMortyService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -27,12 +24,12 @@ public class RickAndMortyController {
     }
 
     @GetMapping("/characters/{id}")
-    public RickAndMortyCharacter getRickById(@PathVariable String id){
+    public RickAndMortyCharacter getCharacterById(@PathVariable String id){
         return service.getCharacterById(id);
     }
 
     @GetMapping("/characters")
-    public RickAndMortyApiResponse getRickByStatus(@RequestParam String status){
+    public RickAndMortyApiResponse getCharactersByStatus(@RequestParam String status){
         return service.getCharacterByStatus(status);
     }
 
